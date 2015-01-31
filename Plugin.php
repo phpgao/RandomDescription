@@ -45,7 +45,7 @@ class RandomDescription_Plugin implements Typecho_Plugin_Interface
     public static function config(Typecho_Widget_Helper_Form $form)
     {
 
-        $description = new Typecho_Widget_Helper_Form_Element_Textarea('description', NULL, NULL, _t('随机副标题,一行一个'), _t('留空取当前副标题'));
+        $description = new Typecho_Widget_Helper_Form_Element_Textarea('description', NULL, Helper::options()->description, _t('需要变化的文本,一行一个'), _t('留空取当前站点描述'));
         $form->addInput($description);
 
         $last_string = new Typecho_Widget_Helper_Form_Element_Hidden('last_string', NULL, NULL);
@@ -79,7 +79,7 @@ class RandomDescription_Plugin implements Typecho_Plugin_Interface
     public static function get_random_string(){
         $config = Helper::options()->plugin('RandomDescription');
         if(empty($config->description)){
-             return Helper::options()->description;
+            return Helper::options()->description;
         }
         if(time() - $config->last_time > $config->interval){
             $string = self::gen_string_from($config->description);
