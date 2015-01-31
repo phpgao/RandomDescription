@@ -73,7 +73,7 @@ class RandomDescription_Plugin implements Typecho_Plugin_Interface
     public static function change_description($class)
     {
 
-        $class->random = self::get_random_string();
+        $class->random = htmlspecialchars(self::get_random_string());
     }
 
     public static function get_random_string(){
