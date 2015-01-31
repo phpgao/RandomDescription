@@ -76,23 +76,25 @@ class RandomDescription_Plugin implements Typecho_Plugin_Interface
         $class->random = htmlspecialchars(self::get_random_string());
     }
 
-    public static function get_random_string(){
+    public static function get_random_string()
+    {
         $config = Helper::options()->plugin('RandomDescription');
-        if(empty($config->description)){
+        if (empty($config->description)) {
             return Helper::options()->description;
         }
-        if(time() - $config->last_time > $config->interval){
+        if (time() - $config->last_time > $config->interval) {
             $string = self::gen_string_from($config->description);
             $time = array('last_time' => time(), 'last_string' => $string);
             Helper::configPlugin('RandomDescription', $time);
             return $string;
-        }else{
+        } else {
             return $config->last_string;
         }
     }
 
-    public static function gen_string_from($description){
-        $str_array = explode("\n",$description);
+    public static function gen_string_from($description)
+    {
+        $str_array = explode("\n", $description);
         $key = array_rand($str_array);
         return $str_array[$key];
     }
